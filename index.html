@@ -1,261 +1,447 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>疲勞・修行・減重 日課系統 v5</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>每日功課 v5</title>
+<meta name="theme-color" content="#7b6f63" />
 <style>
 :root{
-  --bg:#f6f3ee; --card:#fffaf2; --ink:#2f2a24; --muted:#7a6f63;
-  --accent:#8a6f45; --soft:#e9ddcc; --ok:#4f8a5b; --warn:#b77b2b;
+  --bg:#f6f1ea;
+  --card:#ffffff;
+  --text:#2f2a25;
+  --muted:#7a6f66;
+  --main:#7b6f63;
+  --main2:#a68f73;
+  --ok:#5d9c73;
+  --warn:#d29b48;
+  --bad:#c96b62;
+  --line:#e5ddd2;
 }
 *{box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;background:var(--bg);color:var(--ink);margin:0;padding:16px;}
-h1{text-align:center;font-size:24px;margin:8px 0 4px}
-.subtitle{text-align:center;color:var(--muted);font-size:14px;margin-bottom:14px}
-.card{background:var(--card);border:1px solid var(--soft);border-radius:18px;padding:16px;margin:12px auto;max-width:720px;box-shadow:0 4px 14px rgba(80,55,20,.08)}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-@media(max-width:620px){.row{grid-template-columns:1fr}}
-label{display:block;margin:8px 0;line-height:1.5}
-input[type="number"],textarea,select{width:100%;padding:10px;border:1px solid var(--soft);border-radius:12px;background:white;font-size:16px}
-textarea{height:72px;resize:vertical}
-button{width:100%;padding:12px;margin-top:10px;border:0;border-radius:12px;background:var(--accent);color:white;font-size:16px;font-weight:700}
-button.secondary{background:#6f7564}
-button.danger{background:#9b5a4b}
-.pill{display:inline-block;background:var(--soft);border-radius:999px;padding:5px 10px;margin:3px;font-size:13px}
-.big{font-size:22px;font-weight:800}
-.good{color:var(--ok);font-weight:700}.warn{color:var(--warn);font-weight:700}
-.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-@media(max-width:620px){.grid4{grid-template-columns:repeat(2,1fr)}}
-.stat{background:white;border:1px solid var(--soft);border-radius:14px;padding:10px;text-align:center}
-.history-item{background:white;border:1px solid var(--soft);border-radius:14px;padding:10px;margin:8px 0;font-size:14px}
-small{color:var(--muted)}
-hr{border:0;border-top:1px solid var(--soft);margin:14px 0}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","Helvetica Neue",Arial,sans-serif;
+  background:linear-gradient(180deg,#f7efe6 0%,#f6f1ea 45%,#efe7dc 100%);
+  color:var(--text);
+  padding:18px;
+}
+.app{
+  max-width:560px;
+  margin:0 auto;
+  padding-bottom:40px;
+}
+.header{
+  padding:18px 4px 10px;
+}
+h1{
+  margin:0;
+  font-size:28px;
+  letter-spacing:.5px;
+}
+.sub{
+  color:var(--muted);
+  margin-top:6px;
+  font-size:14px;
+}
+.card{
+  background:rgba(255,255,255,.92);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:16px;
+  margin:12px 0;
+  box-shadow:0 8px 20px rgba(70,50,30,.06);
+}
+.grid2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.stat{
+  background:#f3ece3;
+  border-radius:14px;
+  padding:12px;
+}
+.stat .num{
+  font-size:24px;
+  font-weight:800;
+  margin-top:4px;
+}
+.stat .label{
+  color:var(--muted);
+  font-size:13px;
+}
+.task{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  border-bottom:1px solid var(--line);
+  padding:13px 0;
+}
+.task:last-child{border-bottom:none}
+.task-title{
+  font-weight:700;
+  font-size:16px;
+}
+.task-note{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:3px;
+}
+.btn{
+  border:none;
+  border-radius:999px;
+  padding:10px 14px;
+  min-width:86px;
+  font-weight:700;
+  background:#ded4c8;
+  color:#4b4037;
+}
+.btn.done{
+  background:var(--ok);
+  color:#fff;
+}
+.progress-wrap{
+  height:14px;
+  background:#e8ded2;
+  border-radius:999px;
+  overflow:hidden;
+  margin-top:10px;
+}
+.progress{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--main2),var(--ok));
+  border-radius:999px;
+  transition:.25s;
+}
+label{
+  display:block;
+  margin:12px 0 6px;
+  font-weight:700;
+}
+input,textarea,select{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:11px;
+  font-size:16px;
+  background:#fffdfb;
+  color:var(--text);
+}
+textarea{min-height:86px;resize:vertical}
+.row{
+  display:flex;
+  gap:10px;
+}
+.row > *{flex:1}
+.small{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
+}
+.primary{
+  width:100%;
+  border:none;
+  border-radius:14px;
+  padding:13px;
+  background:var(--main);
+  color:white;
+  font-weight:800;
+  font-size:16px;
+  margin-top:12px;
+}
+.secondary{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:13px;
+  background:#fff;
+  color:var(--text);
+  font-weight:800;
+  font-size:16px;
+  margin-top:10px;
+}
+.week{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:7px;
+  margin-top:10px;
+}
+.day{
+  background:#eee5da;
+  border-radius:12px;
+  padding:8px 4px;
+  text-align:center;
+  font-size:12px;
+  min-height:54px;
+}
+.day strong{
+  display:block;
+  margin-bottom:4px;
+}
+.day.full{background:#cfe8d6}
+.day.some{background:#f3dfb6}
+.day.zero{background:#ead1cc}
+.footer-note{
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+  margin-top:18px;
+}
+.pill{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#efe5d9;
+  color:#5b4d42;
+  font-size:12px;
+  font-weight:700;
+}
+@media (display-mode: standalone){
+  body{padding-top:calc(18px + env(safe-area-inset-top))}
+}
 </style>
 </head>
 <body>
-<h1>🌿 疲勞・修行・減重 日課系統 v5</h1>
-<div class="subtitle">原則：先保命、再穩定、最後才加量。累的日子也算修行。</div>
-
-<div class="card">
-  <div class="big">今日模式：<span id="modeText">判斷中</span></div>
-  <small>系統會依疲勞分數建議今日功課量，不用每天硬撐滿格。</small>
-</div>
-
-<div class="card">
-  <h3>① 今日身體狀態</h3>
-  <div class="row">
-    <label>疲勞分數 1-10（10最累）
-      <input id="fatigue" type="number" min="1" max="10" value="5" oninput="updateMode()">
-    </label>
-    <label>睡眠時數
-      <input id="sleep" type="number" step="0.5" min="0" max="12" value="6.5">
-    </label>
+<div class="app">
+  <div class="header">
+    <span class="pill">v5｜手機桌面版</span>
+    <h1>每日功課</h1>
+    <div class="sub" id="todayText"></div>
   </div>
-  <div class="row">
-    <label>體重 kg（可不填）
-      <input id="weight" type="number" step="0.1" min="20" max="200">
-    </label>
-    <label>今日飲食穩定度
-      <select id="food">
-        <option value="穩">穩：有蛋白質，少甜少精緻澱粉</option>
-        <option value="普通">普通：大致正常</option>
-        <option value="亂">亂：甜食/澱粉偏多或太晚吃</option>
-      </select>
-    </label>
+
+  <div class="card">
+    <div class="grid2">
+      <div class="stat">
+        <div class="label">今日完成率</div>
+        <div class="num" id="rate">0%</div>
+      </div>
+      <div class="stat">
+        <div class="label">🔥 連續全完成</div>
+        <div class="num"><span id="streak">0</span> 天</div>
+      </div>
+    </div>
+    <div class="progress-wrap"><div class="progress" id="progress"></div></div>
+    <p class="small" id="dailyHint">今天先求有做，不求完美。</p>
   </div>
-</div>
 
-<div class="card">
-  <h3>② 今日最不耗力日課</h3>
-  <div id="suggestion"></div>
-  <hr>
-  <label><input type="checkbox" id="run"> 超慢跑 / 走跑（依今日模式）</label>
-  <label><input type="checkbox" id="med"> 打坐（依今日模式）</label>
-  <label><input type="checkbox" id="morning"> 早課</label>
-  <label><input type="checkbox" id="night"> 晚課：八十八佛</label>
-  <label><input type="checkbox" id="protein"> 早餐或午餐有蛋白質</label>
-  <label><input type="checkbox" id="phone"> 睡前30分鐘少滑手機</label>
-  <label>📝 今日一句話
-    <textarea id="note" placeholder="例如：今天很累，但有完成低配版。"></textarea>
-  </label>
-  <button onclick="save()">儲存今日紀錄</button>
-</div>
-
-<div class="card">
-  <h3>③ 儀表板</h3>
-  <div class="grid4">
-    <div class="stat"><div id="totalDays" class="big">0</div><small>紀錄天數</small></div>
-    <div class="stat"><div id="streak" class="big">0</div><small>連續天數</small></div>
-    <div class="stat"><div id="weekRate" class="big">0%</div><small>7日完成率</small></div>
-    <div class="stat"><div id="avgFatigue" class="big">-</div><small>平均疲勞</small></div>
+  <div class="card">
+    <div class="task">
+      <div>
+        <div class="task-title">🏃 超慢跑</div>
+        <div class="task-note">保底 15 分，狀態好 30 分</div>
+      </div>
+      <button class="btn" data-key="run">未完成</button>
+    </div>
+    <div class="task">
+      <div>
+        <div class="task-title">🧘 靜坐</div>
+        <div class="task-note">保底 10 分，晚上可加長</div>
+      </div>
+      <button class="btn" data-key="meditation">未完成</button>
+    </div>
+    <div class="task">
+      <div>
+        <div class="task-title">🧹 環境整理</div>
+        <div class="task-note">只整理一小角也算</div>
+      </div>
+      <button class="btn" data-key="clean">未完成</button>
+    </div>
+    <div class="task">
+      <div>
+        <div class="task-title">😴 睡眠節奏</div>
+        <div class="task-note">不熬夜、睡前降速</div>
+      </div>
+      <button class="btn" data-key="sleep">未完成</button>
+    </div>
   </div>
-  <div id="detailStats" style="margin-top:12px"></div>
-</div>
 
-<div class="card">
-  <h3>④ 自動週報</h3>
-  <div id="weekly"></div>
-</div>
+  <div class="card">
+    <h3>今日狀態紀錄</h3>
+    <div class="row">
+      <div>
+        <label>疲勞 1-10</label>
+        <input id="fatigue" type="number" min="1" max="10" placeholder="例：6">
+      </div>
+      <div>
+        <label>心情 1-10</label>
+        <input id="mood" type="number" min="1" max="10" placeholder="例：7">
+      </div>
+    </div>
+    <label>體重 kg</label>
+    <input id="weight" type="number" step="0.1" placeholder="可不填">
+    <label>今天一句話</label>
+    <textarea id="note" placeholder="例：今天有點累，但有完成保底。"></textarea>
+    <button class="primary" id="saveBtn">儲存今日紀錄</button>
+  </div>
 
-<div class="card">
-  <h3>⑤ 匯出 / 備份</h3>
-  <button class="secondary" onclick="exportCSV()">匯出 CSV（可用 Excel 開）</button>
-  <button class="secondary" onclick="exportJSON()">匯出 JSON 備份</button>
-  <button class="danger" onclick="clearToday()">清除今日紀錄</button>
-</div>
+  <div class="card">
+    <h3>本週狀態</h3>
+    <div class="week" id="week"></div>
+    <p class="small">綠色＝4項全完成；黃色＝有做一部分；紅色＝尚未打卡。</p>
+  </div>
 
-<div class="card">
-  <h3>最近10筆紀錄</h3>
-  <div id="history"></div>
+  <div class="card">
+    <h3>資料備份</h3>
+    <button class="secondary" id="exportBtn">匯出 JSON 備份</button>
+    <button class="secondary" id="copyBtn">複製今日週報</button>
+    <p class="small">資料存在這支手機的瀏覽器裡。換手機或清 Safari 資料會消失，所以偶爾匯出備份。</p>
+  </div>
+
+  <div class="footer-note">少做事，做對事，穩定就好。</div>
 </div>
 
 <script>
-const KEY="practice_v5_fatigue_spirit_weight";
-const tasks=["run","med","morning","night","protein","phone"];
-const taskNames={run:"超慢跑/走跑",med:"打坐",morning:"早課",night:"晚課八十八佛",protein:"蛋白質",phone:"睡前少手機"};
+const TASKS = ["run","meditation","clean","sleep"];
+const TASK_NAMES = {
+  run:"超慢跑",
+  meditation:"靜坐",
+  clean:"環境整理",
+  sleep:"睡眠節奏"
+};
 
-function dateKey(d=new Date()){return d.toLocaleDateString("sv-SE");}
-function getData(){return JSON.parse(localStorage.getItem(KEY)||"{}");}
-function setData(data){localStorage.setItem(KEY,JSON.stringify(data));}
-
-function modeByFatigue(f){
-  if(f>=8) return "保命低配";
-  if(f>=6) return "恢復版";
-  return "標準版";
+function localDateKey(date=new Date()){
+  const y = date.getFullYear();
+  const m = String(date.getMonth()+1).padStart(2,"0");
+  const d = String(date.getDate()).padStart(2,"0");
+  return `${y}-${m}-${d}`;
 }
-function updateMode(){
-  let f=Number(document.getElementById("fatigue").value||5);
-  let mode=modeByFatigue(f);
-  document.getElementById("modeText").innerHTML = mode==="標準版" ? '<span class="good">標準版</span>' :
-    mode==="恢復版" ? '<span class="warn">恢復版</span>' : '<span class="warn">保命低配</span>';
-
-  let html="";
-  if(mode==="保命低配"){
-    html = `
-      <span class="pill">目標：不崩盤</span>
-      <p>今天只做最低功課：走路5-10分鐘、打坐5-10分鐘、早晚課擇一或合掌稱念。做到2項就算成功。</p>
-      <p class="warn">不要硬跑30分，不要硬坐60分。</p>`;
-  }else if(mode==="恢復版"){
-    html = `
-      <span class="pill">目標：恢復能量</span>
-      <p>超慢跑10-20分鐘；打坐15-30分鐘；早課或晚課至少一項完整。做到3項就算成功。</p>`;
-  }else{
-    html = `
-      <span class="pill">目標：穩定累積</span>
-      <p>超慢跑30分鐘；打坐可分2段共60分鐘；早課、晚課正常做。做到4項以上很好，不追求完美。</p>`;
-  }
-  document.getElementById("suggestion").innerHTML=html;
-}
+const today = localDateKey();
+let allData = JSON.parse(localStorage.getItem("dailyPracticeV5") || "{}");
+if(!allData[today]) allData[today] = {tasks:{}, fatigue:"", mood:"", weight:"", note:""};
 
 function save(){
-  const data=getData();
-  const k=dateKey();
-  data[k]={
-    date:k,
-    fatigue:Number(fatigue.value||0),
-    sleep:Number(sleep.value||0),
-    weight:weight.value?Number(weight.value):"",
-    food:food.value,
-    run:run.checked, med:med.checked, morning:morning.checked, night:night.checked,
-    protein:protein.checked, phone:phone.checked,
-    note:note.value.trim(),
-    mode:modeByFatigue(Number(fatigue.value||5))
-  };
-  setData(data); load();
+  localStorage.setItem("dailyPracticeV5", JSON.stringify(allData));
 }
-
-function loadToday(data){
-  const t=data[dateKey()];
-  tasks.forEach(id=>document.getElementById(id).checked=false);
-  note.value=""; weight.value="";
-  if(!t) return;
-  fatigue.value=t.fatigue||5; sleep.value=t.sleep||6.5; weight.value=t.weight||""; food.value=t.food||"普通";
-  tasks.forEach(id=>document.getElementById(id).checked=!!t[id]);
-  note.value=t.note||"";
-  updateMode();
+function dayData(key=today){
+  if(!allData[key]) allData[key] = {tasks:{}, fatigue:"", mood:"", weight:"", note:""};
+  if(!allData[key].tasks) allData[key].tasks = {};
+  return allData[key];
 }
-
-function isSuccess(r){
-  const done=tasks.filter(id=>r[id]).length;
-  if(r.mode==="保命低配") return done>=2;
-  if(r.mode==="恢復版") return done>=3;
-  return done>=4;
+function doneCount(key=today){
+  const tasks = dayData(key).tasks;
+  return TASKS.filter(t=>tasks[t]).length;
 }
-
-function load(){
-  const data=getData();
-  const keys=Object.keys(data).sort();
-  loadToday(data);
-  const records=keys.map(k=>data[k]);
-  totalDays.textContent=records.length;
-
-  // streak
-  let s=0;
-  for(let i=0;i<3650;i++){
-    let d=new Date(); d.setDate(d.getDate()-i);
-    let k=dateKey(d);
-    if(data[k] && isSuccess(data[k])) s++; else break;
+function fullDone(key=today){
+  return doneCount(key) === TASKS.length;
+}
+function calcStreak(){
+  let streak = 0;
+  let d = new Date();
+  for(let i=0;i<365;i++){
+    const key = localDateKey(d);
+    if(fullDone(key)){
+      streak++;
+      d.setDate(d.getDate()-1);
+    }else{
+      break;
+    }
   }
-  streak.textContent=s;
-
-  const last7=records.filter(r=>{
-    const diff=(new Date(dateKey())-new Date(r.date))/(86400000);
-    return diff>=0 && diff<7;
+  return streak;
+}
+function updateUI(){
+  const d = dayData();
+  document.getElementById("todayText").textContent = today;
+  document.querySelectorAll(".btn[data-key]").forEach(btn=>{
+    const key = btn.dataset.key;
+    const isDone = !!d.tasks[key];
+    btn.classList.toggle("done", isDone);
+    btn.textContent = isDone ? "完成" : "未完成";
   });
-  weekRate.textContent= last7.length ? Math.round(last7.filter(isSuccess).length/last7.length*100)+"%" : "0%";
-  const fatigueVals=records.map(r=>Number(r.fatigue)).filter(Boolean);
-  avgFatigue.textContent=fatigueVals.length ? (fatigueVals.reduce((a,b)=>a+b,0)/fatigueVals.length).toFixed(1) : "-";
 
-  let counts={}; tasks.forEach(id=>counts[id]=0);
-  records.forEach(r=>tasks.forEach(id=>{if(r[id]) counts[id]++;}));
-  detailStats.innerHTML=tasks.map(id=>`<span class="pill">${taskNames[id]}：${counts[id]}天</span>`).join("");
+  const count = doneCount();
+  const rate = Math.round(count / TASKS.length * 100);
+  document.getElementById("rate").textContent = rate + "%";
+  document.getElementById("progress").style.width = rate + "%";
+  document.getElementById("streak").textContent = calcStreak();
 
-  weeklyReport(last7);
-  history.innerHTML=keys.slice().reverse().slice(0,10).map(k=>{
-    let r=data[k]; let done=tasks.filter(id=>r[id]).length;
-    return `<div class="history-item"><b>${k}</b>｜${r.mode||""}｜完成 ${done}/6｜疲勞 ${r.fatigue||"-"}｜睡眠 ${r.sleep||"-"}h｜飲食 ${r.food||"-"}<br><small>${r.note||""}</small></div>`;
-  }).join("") || "<small>尚無紀錄</small>";
+  const hints = [
+    "今天先求有做，不求完美。",
+    "完成一項也算把自己拉回來。",
+    "身體穩，心才會穩。",
+    "不要處理別人的情緒，先顧自己的節奏。",
+    "全完成，今天很可以。"
+  ];
+  document.getElementById("dailyHint").textContent = hints[count];
+
+  document.getElementById("fatigue").value = d.fatigue || "";
+  document.getElementById("mood").value = d.mood || "";
+  document.getElementById("weight").value = d.weight || "";
+  document.getElementById("note").value = d.note || "";
+
+  renderWeek();
 }
+function renderWeek(){
+  const week = document.getElementById("week");
+  week.innerHTML = "";
+  const now = new Date();
+  const day = now.getDay(); // 0 Sun
+  const mondayOffset = day === 0 ? -6 : 1 - day;
+  const start = new Date(now);
+  start.setDate(now.getDate()+mondayOffset);
 
-function weeklyReport(last7){
-  if(!last7.length){weekly.innerHTML="<small>還沒有本週資料。</small>"; return;}
-  let success=last7.filter(isSuccess).length;
-  let avgF=(last7.reduce((a,r)=>a+Number(r.fatigue||0),0)/last7.length).toFixed(1);
-  let best="", worst="", max=-1, min=999;
-  tasks.forEach(id=>{
-    let c=last7.filter(r=>r[id]).length;
-    if(c>max){max=c;best=taskNames[id];}
-    if(c<min){min=c;worst=taskNames[id];}
+  for(let i=0;i<7;i++){
+    const d = new Date(start);
+    d.setDate(start.getDate()+i);
+    const key = localDateKey(d);
+    const c = doneCount(key);
+    const el = document.createElement("div");
+    el.className = "day " + (c===4 ? "full" : c>0 ? "some" : "zero");
+    const names = ["一","二","三","四","五","六","日"];
+    el.innerHTML = `<strong>${names[i]}</strong><div>${c}/4</div><small>${String(d.getMonth()+1)}/${d.getDate()}</small>`;
+    week.appendChild(el);
+  }
+}
+document.querySelectorAll(".btn[data-key]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const d = dayData();
+    const key = btn.dataset.key;
+    d.tasks[key] = !d.tasks[key];
+    save();
+    updateUI();
   });
-  let advice = avgF>=7 ? "本週疲勞偏高，下一週請用恢復版，不要硬追滿分。" :
-               success>=5 ? "本週穩定度不錯，可以維持，不必再加量。" :
-               "本週先抓最容易完成的2-3項，建立不中斷感。";
-  weekly.innerHTML = `
-    <p>7日紀錄：${last7.length}天；成功日：${success}天；平均疲勞：${avgF}</p>
-    <p>最穩：<span class="good">${best}</span>；最需要降低門檻：<span class="warn">${worst}</span></p>
-    <p><b>建議：</b>${advice}</p>`;
-}
+});
+document.getElementById("saveBtn").addEventListener("click",()=>{
+  const d = dayData();
+  d.fatigue = document.getElementById("fatigue").value;
+  d.mood = document.getElementById("mood").value;
+  d.weight = document.getElementById("weight").value;
+  d.note = document.getElementById("note").value;
+  save();
+  alert("已儲存今天紀錄");
+});
+document.getElementById("exportBtn").addEventListener("click",()=>{
+  const blob = new Blob([JSON.stringify(allData,null,2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "daily-practice-v5-backup.json";
+  a.click();
+  URL.revokeObjectURL(url);
+});
+document.getElementById("copyBtn").addEventListener("click",async()=>{
+  const d = dayData();
+  const doneList = TASKS.filter(t=>d.tasks[t]).map(t=>"✅ "+TASK_NAMES[t]).join("\n") || "尚未完成";
+  const text = `每日功課週報 / ${today}
+今日完成率：${Math.round(doneCount()/TASKS.length*100)}%
+連續全完成：${calcStreak()}天
 
-function exportCSV(){
-  const data=getData(); const keys=Object.keys(data).sort();
-  const header=["date","mode","fatigue","sleep","weight","food",...tasks,"note"];
-  const rows=[header.join(",")];
-  keys.forEach(k=>{
-    const r=data[k];
-    rows.push(header.map(h=>`"${String(r[h]??"").replaceAll('"','""')}"`).join(","));
-  });
-  download("practice_v5.csv", rows.join("\n"), "text/csv");
-}
-function exportJSON(){download("practice_v5_backup.json", JSON.stringify(getData(),null,2), "application/json");}
-function download(filename,text,type){
-  const blob=new Blob([text],{type:type});
-  const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=filename; a.click();
-}
-function clearToday(){
-  const data=getData(); delete data[dateKey()]; setData(data); load();
-}
-updateMode(); load();
+${doneList}
+
+疲勞：${d.fatigue || "未填"}
+心情：${d.mood || "未填"}
+體重：${d.weight || "未填"}
+一句話：${d.note || "未填"}`;
+  try{
+    await navigator.clipboard.writeText(text);
+    alert("已複製今日週報");
+  }catch(e){
+    prompt("請手動複製：", text);
+  }
+});
+updateUI();
 </script>
 </body>
 </html>
