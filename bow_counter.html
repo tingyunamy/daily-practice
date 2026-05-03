@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>至誠拜懺計數器</title>
+    <style>
+        :root {
+            --primary-gold: #D4AF37;
+            --deep-red: #8B0000;
+            --bg-color: #FDF5E6;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            touch-action: manipulation;
+        }
+        .container {
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+        .title {
+            color: var(--deep-red);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .counter-display {
+            font-size: 5rem;
+            font-weight: bold;
+            color: var(--deep-red);
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .main-btn {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 8px solid var(--primary-gold);
+            background-color: white;
+            font-size: 1.5rem;
+            color: var(--deep-red);
+            font-weight: bold;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s;
+            margin-bottom: 30px;
+        }
+        .main-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            background-color: #FFF9E3;
+        }
+        .control-panel {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        button.sub-btn {
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            background-color: #ddd;
+            cursor: pointer;
+        }
+        .history {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #666;
+            width: 100%;
+            max-height: 150px;
+            overflow-y: auto;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+        }
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="title">🙏 至誠拜懺計數器</div>
+    
+    <div class="counter-display" id="count">0</div>
+
+    <button class="main-btn" onclick="increment()">禮佛一拜</button>
+
+    <div class="control-panel">
+        <button class="sub-btn" onclick="decrement()">扣除一次</button>
+        <button class="sub-btn" onclick="resetCount()" style="background-color: #ffcccc; color: #cc0000;">重設</button>
+        <button class="sub-btn" onclick="saveSession()" style="background-color: #d1e7dd; color: #0f5132;">存檔</button>
+    </div>
+
+    <div class="history" id="historyLog">
+        <strong>近期紀錄：</strong>
+        </div>
+</div>
+
+<script>
+    let currentCount = 0;
+    let history = JSON.parse(localStorage.getItem('bowHistory')) || [];
+
+    // 初始化顯示
+    updateDisplay();
+    renderHistory();
+
+    function increment() {
+        currentCount++;
+        // 震動回饋 (僅限 Android 或支援的手機)
+        if (navigator.vibrate) navigator.vibrate(50);
+        updateDisplay();
+    }
+
+    function decrement() {
+        if (currentCount > 0) {
+            currentCount--;
+            updateDisplay();
+        }
+    }
+
+    function resetCount() {
+        if (confirm("確定要將本次計數歸零嗎？")) {
+            currentCount = 0;
+            updateDisplay();
+        }
+    }
