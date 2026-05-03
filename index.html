@@ -3,20 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>每日功課 v5</title>
+<title>每日功課 v5 修正版</title>
 <meta name="theme-color" content="#7b6f63" />
 <style>
 :root{
-  --bg:#f6f1ea;
-  --card:#ffffff;
-  --text:#2f2a25;
-  --muted:#7a6f66;
-  --main:#7b6f63;
-  --main2:#a68f73;
-  --ok:#5d9c73;
-  --warn:#d29b48;
-  --bad:#c96b62;
-  --line:#e5ddd2;
+  --bg:#f6f1ea; --card:#fff; --text:#2f2a25; --muted:#7a6f66;
+  --main:#7b6f63; --main2:#a68f73; --ok:#5d9c73;
+  --warn:#d29b48; --bad:#c96b62; --line:#e5ddd2;
 }
 *{box-sizing:border-box}
 body{
@@ -26,188 +19,57 @@ body{
   color:var(--text);
   padding:18px;
 }
-.app{
-  max-width:560px;
-  margin:0 auto;
-  padding-bottom:40px;
-}
-.header{
-  padding:18px 4px 10px;
-}
-h1{
-  margin:0;
-  font-size:28px;
-  letter-spacing:.5px;
-}
-.sub{
-  color:var(--muted);
-  margin-top:6px;
-  font-size:14px;
-}
+.app{max-width:560px;margin:0 auto;padding-bottom:44px}
+.header{padding:18px 4px 10px}
+h1{margin:0;font-size:28px;letter-spacing:.5px}
+h2,h3{margin:0 0 10px}
+.sub{color:var(--muted);margin-top:6px;font-size:14px}
 .card{
-  background:rgba(255,255,255,.92);
+  background:rgba(255,255,255,.94);
   border:1px solid var(--line);
   border-radius:18px;
   padding:16px;
   margin:12px 0;
   box-shadow:0 8px 20px rgba(70,50,30,.06);
 }
-.grid2{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-.stat{
-  background:#f3ece3;
-  border-radius:14px;
-  padding:12px;
-}
-.stat .num{
-  font-size:24px;
-  font-weight:800;
-  margin-top:4px;
-}
-.stat .label{
-  color:var(--muted);
-  font-size:13px;
-}
-.task{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  border-bottom:1px solid var(--line);
-  padding:13px 0;
-}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:#f3ece3;border-radius:14px;padding:12px}
+.stat .num{font-size:24px;font-weight:800;margin-top:4px}
+.stat .label{color:var(--muted);font-size:13px}
+.progress-wrap{height:14px;background:#e8ded2;border-radius:999px;overflow:hidden;margin-top:10px}
+.progress{height:100%;width:0%;background:linear-gradient(90deg,var(--main2),var(--ok));border-radius:999px;transition:.25s}
+.section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.section-title span{font-size:12px;color:var(--muted)}
+.task{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding:13px 0}
 .task:last-child{border-bottom:none}
-.task-title{
-  font-weight:700;
-  font-size:16px;
-}
-.task-note{
-  color:var(--muted);
-  font-size:12px;
-  margin-top:3px;
-}
-.btn{
-  border:none;
-  border-radius:999px;
-  padding:10px 14px;
-  min-width:86px;
-  font-weight:700;
-  background:#ded4c8;
-  color:#4b4037;
-}
-.btn.done{
-  background:var(--ok);
-  color:#fff;
-}
-.progress-wrap{
-  height:14px;
-  background:#e8ded2;
-  border-radius:999px;
-  overflow:hidden;
-  margin-top:10px;
-}
-.progress{
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg,var(--main2),var(--ok));
-  border-radius:999px;
-  transition:.25s;
-}
-label{
-  display:block;
-  margin:12px 0 6px;
-  font-weight:700;
-}
-input,textarea,select{
-  width:100%;
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:11px;
-  font-size:16px;
-  background:#fffdfb;
-  color:var(--text);
+.task-title{font-weight:800;font-size:16px}
+.task-note{color:var(--muted);font-size:12px;margin-top:3px;line-height:1.4}
+.btn{border:none;border-radius:999px;padding:10px 14px;min-width:86px;font-weight:800;background:#ded4c8;color:#4b4037}
+.btn.done{background:var(--ok);color:#fff}
+label{display:block;margin:12px 0 6px;font-weight:800}
+input,textarea{
+  width:100%;border:1px solid var(--line);border-radius:12px;padding:11px;font-size:16px;background:#fffdfb;color:var(--text)
 }
 textarea{min-height:86px;resize:vertical}
-.row{
-  display:flex;
-  gap:10px;
+.row{display:flex;gap:10px}.row>*{flex:1}
+.small{color:var(--muted);font-size:12px;line-height:1.5}
+.primary,.secondary{
+  width:100%;border-radius:14px;padding:13px;font-weight:800;font-size:16px;margin-top:12px
 }
-.row > *{flex:1}
-.small{
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.5;
-}
-.primary{
-  width:100%;
-  border:none;
-  border-radius:14px;
-  padding:13px;
-  background:var(--main);
-  color:white;
-  font-weight:800;
-  font-size:16px;
-  margin-top:12px;
-}
-.secondary{
-  width:100%;
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:13px;
-  background:#fff;
-  color:var(--text);
-  font-weight:800;
-  font-size:16px;
-  margin-top:10px;
-}
-.week{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  gap:7px;
-  margin-top:10px;
-}
-.day{
-  background:#eee5da;
-  border-radius:12px;
-  padding:8px 4px;
-  text-align:center;
-  font-size:12px;
-  min-height:54px;
-}
-.day strong{
-  display:block;
-  margin-bottom:4px;
-}
-.day.full{background:#cfe8d6}
-.day.some{background:#f3dfb6}
-.day.zero{background:#ead1cc}
-.footer-note{
-  text-align:center;
-  color:var(--muted);
-  font-size:12px;
-  margin-top:18px;
-}
-.pill{
-  display:inline-block;
-  padding:6px 10px;
-  border-radius:999px;
-  background:#efe5d9;
-  color:#5b4d42;
-  font-size:12px;
-  font-weight:700;
-}
-@media (display-mode: standalone){
-  body{padding-top:calc(18px + env(safe-area-inset-top))}
-}
+.primary{border:none;background:var(--main);color:#fff}
+.secondary{border:1px solid var(--line);background:#fff;color:var(--text)}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;margin-top:10px}
+.day{background:#eee5da;border-radius:12px;padding:8px 4px;text-align:center;font-size:12px;min-height:56px}
+.day strong{display:block;margin-bottom:4px}.day.full{background:#cfe8d6}.day.some{background:#f3dfb6}.day.zero{background:#ead1cc}
+.pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#efe5d9;color:#5b4d42;font-size:12px;font-weight:800}
+.footer-note{text-align:center;color:var(--muted);font-size:12px;margin-top:18px}
+@media (display-mode: standalone){body{padding-top:calc(18px + env(safe-area-inset-top))}}
 </style>
 </head>
 <body>
 <div class="app">
   <div class="header">
-    <span class="pill">v5｜手機桌面版</span>
+    <span class="pill">v5 修正版｜早課・晚課・修行版</span>
     <h1>每日功課</h1>
     <div class="sub" id="todayText"></div>
   </div>
@@ -228,33 +90,53 @@ textarea{min-height:86px;resize:vertical}
   </div>
 
   <div class="card">
+    <div class="section-title"><h3>🌅 早課</h3><span>開機用，簡短也算</span></div>
+    <div class="task">
+      <div>
+        <div class="task-title">🌅 早課</div>
+        <div class="task-note">可包含發願、持咒、讀誦、簡短觀照</div>
+      </div>
+      <button class="btn" data-key="morning">未完成</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title"><h3>☀️ 身體功課</h3><span>減重＋養氣</span></div>
     <div class="task">
       <div>
         <div class="task-title">🏃 超慢跑</div>
-        <div class="task-note">保底 15 分，狀態好 30 分</div>
+        <div class="task-note">保底 15 分；狀態好做到 30 分</div>
       </div>
-      <button class="btn" data-key="run">未完成</button>
+      <button class="btn" data-key="slowJog">未完成</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title"><h3>🙏 修行功課</h3><span>主修區</span></div>
+    <div class="task">
+      <div>
+        <div class="task-title">🙏 拜八十八佛</div>
+        <div class="task-note">可全拜；狀態弱時做簡化版也算</div>
+      </div>
+      <button class="btn" data-key="buddha88">未完成</button>
     </div>
     <div class="task">
       <div>
         <div class="task-title">🧘 靜坐</div>
-        <div class="task-note">保底 10 分，晚上可加長</div>
+        <div class="task-note">保底 10 分；穩定時 30～60 分</div>
       </div>
       <button class="btn" data-key="meditation">未完成</button>
     </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title"><h3>🌙 晚課</h3><span>收心用</span></div>
     <div class="task">
       <div>
-        <div class="task-title">🧹 環境整理</div>
-        <div class="task-note">只整理一小角也算</div>
+        <div class="task-title">🌙 晚課</div>
+        <div class="task-note">回向、懺悔、觀照今日身口意</div>
       </div>
-      <button class="btn" data-key="clean">未完成</button>
-    </div>
-    <div class="task">
-      <div>
-        <div class="task-title">😴 睡眠節奏</div>
-        <div class="task-note">不熬夜、睡前降速</div>
-      </div>
-      <button class="btn" data-key="sleep">未完成</button>
+      <button class="btn" data-key="evening">未完成</button>
     </div>
   </div>
 
@@ -272,34 +154,35 @@ textarea{min-height:86px;resize:vertical}
     </div>
     <label>體重 kg</label>
     <input id="weight" type="number" step="0.1" placeholder="可不填">
-    <label>今天一句話</label>
-    <textarea id="note" placeholder="例：今天有點累，但有完成保底。"></textarea>
+    <label>今日修行/身體備註</label>
+    <textarea id="note" placeholder="例：今天拜佛時心比較散，但有完成保底。"></textarea>
     <button class="primary" id="saveBtn">儲存今日紀錄</button>
   </div>
 
   <div class="card">
     <h3>本週狀態</h3>
     <div class="week" id="week"></div>
-    <p class="small">綠色＝4項全完成；黃色＝有做一部分；紅色＝尚未打卡。</p>
+    <p class="small">綠色＝5項全完成；黃色＝有做一部分；紅色＝尚未打卡。</p>
   </div>
 
   <div class="card">
     <h3>資料備份</h3>
     <button class="secondary" id="exportBtn">匯出 JSON 備份</button>
     <button class="secondary" id="copyBtn">複製今日週報</button>
-    <p class="small">資料存在這支手機的瀏覽器裡。換手機或清 Safari 資料會消失，所以偶爾匯出備份。</p>
+    <p class="small">資料存在這支手機的 Safari 裡。換手機或清 Safari 資料會消失，偶爾匯出備份。</p>
   </div>
 
-  <div class="footer-note">少做事，做對事，穩定就好。</div>
+  <div class="footer-note">早課開機，超慢跑養氣，拜佛清障，靜坐安住，晚課收心。</div>
 </div>
 
 <script>
-const TASKS = ["run","meditation","clean","sleep"];
+const TASKS = ["morning","slowJog","buddha88","meditation","evening"];
 const TASK_NAMES = {
-  run:"超慢跑",
+  morning:"早課",
+  slowJog:"超慢跑",
+  buddha88:"拜八十八佛",
   meditation:"靜坐",
-  clean:"環境整理",
-  sleep:"睡眠節奏"
+  evening:"晚課"
 };
 
 function localDateKey(date=new Date()){
@@ -309,12 +192,10 @@ function localDateKey(date=new Date()){
   return `${y}-${m}-${d}`;
 }
 const today = localDateKey();
-let allData = JSON.parse(localStorage.getItem("dailyPracticeV5") || "{}");
+let allData = JSON.parse(localStorage.getItem("dailyPracticeV5Practice") || "{}");
 if(!allData[today]) allData[today] = {tasks:{}, fatigue:"", mood:"", weight:"", note:""};
 
-function save(){
-  localStorage.setItem("dailyPracticeV5", JSON.stringify(allData));
-}
+function save(){ localStorage.setItem("dailyPracticeV5Practice", JSON.stringify(allData)); }
 function dayData(key=today){
   if(!allData[key]) allData[key] = {tasks:{}, fatigue:"", mood:"", weight:"", note:""};
   if(!allData[key].tasks) allData[key].tasks = {};
@@ -324,20 +205,14 @@ function doneCount(key=today){
   const tasks = dayData(key).tasks;
   return TASKS.filter(t=>tasks[t]).length;
 }
-function fullDone(key=today){
-  return doneCount(key) === TASKS.length;
-}
+function fullDone(key=today){ return doneCount(key) === TASKS.length; }
 function calcStreak(){
   let streak = 0;
   let d = new Date();
   for(let i=0;i<365;i++){
     const key = localDateKey(d);
-    if(fullDone(key)){
-      streak++;
-      d.setDate(d.getDate()-1);
-    }else{
-      break;
-    }
+    if(fullDone(key)){ streak++; d.setDate(d.getDate()-1); }
+    else break;
   }
   return streak;
 }
@@ -360,9 +235,10 @@ function updateUI(){
   const hints = [
     "今天先求有做，不求完美。",
     "完成一項也算把自己拉回來。",
-    "身體穩，心才會穩。",
-    "不要處理別人的情緒，先顧自己的節奏。",
-    "全完成，今天很可以。"
+    "早課或超慢跑先做，今天就不會散。",
+    "拜佛與靜坐完成，今天的心會比較穩。",
+    "差一項就全完成了，不要斷。",
+    "全完成，今天很圓滿。"
   ];
   document.getElementById("dailyHint").textContent = hints[count];
 
@@ -377,7 +253,7 @@ function renderWeek(){
   const week = document.getElementById("week");
   week.innerHTML = "";
   const now = new Date();
-  const day = now.getDay(); // 0 Sun
+  const day = now.getDay();
   const mondayOffset = day === 0 ? -6 : 1 - day;
   const start = new Date(now);
   start.setDate(now.getDate()+mondayOffset);
@@ -388,9 +264,9 @@ function renderWeek(){
     const key = localDateKey(d);
     const c = doneCount(key);
     const el = document.createElement("div");
-    el.className = "day " + (c===4 ? "full" : c>0 ? "some" : "zero");
+    el.className = "day " + (c===TASKS.length ? "full" : c>0 ? "some" : "zero");
     const names = ["一","二","三","四","五","六","日"];
-    el.innerHTML = `<strong>${names[i]}</strong><div>${c}/4</div><small>${String(d.getMonth()+1)}/${d.getDate()}</small>`;
+    el.innerHTML = `<strong>${names[i]}</strong><div>${c}/${TASKS.length}</div><small>${String(d.getMonth()+1)}/${d.getDate()}</small>`;
     week.appendChild(el);
   }
 }
@@ -417,23 +293,28 @@ document.getElementById("exportBtn").addEventListener("click",()=>{
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "daily-practice-v5-backup.json";
+  a.download = "daily-practice-v5-practice-backup.json";
   a.click();
   URL.revokeObjectURL(url);
 });
 document.getElementById("copyBtn").addEventListener("click",async()=>{
   const d = dayData();
   const doneList = TASKS.filter(t=>d.tasks[t]).map(t=>"✅ "+TASK_NAMES[t]).join("\n") || "尚未完成";
+  const undoneList = TASKS.filter(t=>!d.tasks[t]).map(t=>"⬜ "+TASK_NAMES[t]).join("\n") || "全部完成";
   const text = `每日功課週報 / ${today}
 今日完成率：${Math.round(doneCount()/TASKS.length*100)}%
 連續全完成：${calcStreak()}天
 
+已完成：
 ${doneList}
+
+未完成：
+${undoneList}
 
 疲勞：${d.fatigue || "未填"}
 心情：${d.mood || "未填"}
 體重：${d.weight || "未填"}
-一句話：${d.note || "未填"}`;
+備註：${d.note || "未填"}`;
   try{
     await navigator.clipboard.writeText(text);
     alert("已複製今日週報");
